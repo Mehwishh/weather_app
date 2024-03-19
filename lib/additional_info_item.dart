@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart' show BuildContext, Column, Image, SizedBox, StatelessWidget, Text, TextStyle, Widget;
 class AdditionalInfoItem extends StatelessWidget {
-  final String imageIcon;
+  final Stream icony;
   final String label;
   final String value;
   const AdditionalInfoItem({
     super.key,
-   required  this.imageIcon,
+   required  this.icony,
    required  this.label ,
    required  this.value ,
   });
   @override
   Widget build(BuildContext context) {
     return  Column(children: [const SizedBox(height: 16,),
-    
+   
            Image.asset(
-              imageIcon,
+              "icony",
               width: 36,
               height: 36,
             ), 
