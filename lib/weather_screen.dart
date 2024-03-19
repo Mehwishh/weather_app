@@ -77,23 +77,24 @@ body: FutureBuilder(
    final windSpeed =currentdata['wind']['speed'];
    final currentSky =currentdata["weather"][0]["description"];
    final date =DateTime.parse(currentdata['dt_txt']); 
+   print(currentSky);
 String getWeatherImage(String currentSky) {
-  switch (currentSky.toLowerCase()) {
-    case 'clear':
-      return 'assets/clear.png';
-    case 'clouds':
-      return 'assets/overcast.png';
-    case 'rain':
-      return 'assets/rain.png';
-    case 'snow':
-      return 'assets/snow.png';
-    case 'mist':
-      return 'assets/mist.png';
-    // Add more cases for other weather conditions as needed
-    default:
-      return 'assets/sunny.png'; // Default image if the weather condition is unknown
+  currentSky = currentSky.toLowerCase();
+  if (currentSky == 'clear' && date.hour >= 12 ) {
+    return 'assets/sunny.png';
+  } else if (currentSky == 'clouds' ||currentSky == 'scattered clouds' ||currentSky == 'overcast clouds') {
+    return 'assets/overcast.png';
+  } else if (currentSky == 'rain' ||currentSky == 'moderate rain' ||currentSky == 'heavy rain') {
+    return 'assets/rain.png';
+  } else if (currentSky == 'snow' ||currentSky == 'moderate snow' ||currentSky == 'heavy snow') {
+    return 'assets/snow.png';
+  } else if (currentSky == 'mist') {
+    return 'assets/mist.png';
+  } else {
+    return 'assets/sunny.png';
   }
 }
+
   return Padding( 
       padding:const EdgeInsets.all(16),
       //main card
@@ -166,9 +167,9 @@ String getWeatherImage(String currentSky) {
             itemBuilder: (context,index){
               final hourlyForecast=data["list"][index+1];
               final time =DateTime.parse(hourlyForecast['dt_txt']);
-              // final hoursky =hourlyForecast["weather"][0]["main"].toString();
+              final hoursky =hourlyForecast["weather"][0]["main"].toString();
               final hourtemp =kelvinToCelsius( hourlyForecast["main"]["temp"]).toString();
-              return HourlyForecast(time:DateFormat.j().format(time), forecastImage:getWeatherImage(currentSky),tempreture: hourtemp); },),
+              return HourlyForecast(time:DateFormat.j().format(time), forecastImage:getWeatherImage(hoursky),tempreture: hourtemp); },),
          ),
          // weather forecast items
        const Text('Additional Information',
@@ -176,11 +177,9 @@ String getWeatherImage(String currentSky) {
             ), const  SizedBox(height: 8,),
        Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          
-           AdditionalInfoItem(icon: Icons.water_drop,label: "Humidity",value: "$currentHumidity%" ,),
-           AdditionalInfoItem(icon: Icons.air,label: "Wind Speed",value: "$windSpeed km/h" ,),
-           AdditionalInfoItem(icon: Icons.beach_access,label: "Pressure",value: "$currentPressure mb" ,),
-         
+           AdditionalInfoItem(icony:"assets/clear.png",label: "Humidity",value: "$currentHumidity%" ,),
+           AdditionalInfoItem(icony:"assets/clear.png",label: "Wind Speed",value: "$windSpeed km/h" ,),
+           AdditionalInfoItem(icony:"assets/clear.png",label: "Pressure",value: "$currentPressure mb" ,),
          ],
          ),Image(image: AssetImage("assets/clear.png"))]
         ,),
