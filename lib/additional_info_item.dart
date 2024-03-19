@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart' show BuildContext, Column, Image, SizedBox, StatelessWidget, Text, TextStyle, Widget;
 class AdditionalInfoItem extends StatelessWidget {
-  final Stream icony;
+  final String icony;
   final String label;
   final String value;
   const AdditionalInfoItem({
@@ -14,7 +14,7 @@ class AdditionalInfoItem extends StatelessWidget {
     return  Column(children: [const SizedBox(height: 16,),
    
            Image.asset(
-              "icony",
+              icony,
               width: 36,
               height: 36,
             ), 
