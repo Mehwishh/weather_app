@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 // import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:weather_app/Additional_info_item.dart';
@@ -76,9 +75,25 @@ body: FutureBuilder(
    final currentHumidity =currentdata['main']['humidity'];
    final currentPressure =currentdata['main']["pressure"];
    final windSpeed =currentdata['wind']['speed'];
-   final currentSky =currentdata["weather"][0]["main"];
+   final currentSky =currentdata["weather"][0]["description"];
    final date =DateTime.parse(currentdata['dt_txt']); 
-
+String getWeatherImage(String currentSky) {
+  switch (currentSky.toLowerCase()) {
+    case 'clear':
+      return 'assets/clear.png';
+    case 'clouds':
+      return 'assets/overcast.png';
+    case 'rain':
+      return 'assets/rain.png';
+    case 'snow':
+      return 'assets/snow.png';
+    case 'mist':
+      return 'assets/mist.png';
+    // Add more cases for other weather conditions as needed
+    default:
+      return 'assets/sunny.png'; // Default image if the weather condition is unknown
+  }
+}
   return Padding( 
       padding:const EdgeInsets.all(16),
       //main card
@@ -112,9 +127,12 @@ body: FutureBuilder(
                         ),
                         ],
                         ), Column(children: [
-                        
-                   const      SizedBox(height: 16,),
-                        Icon(currentSky == "Clouds" || currentSky == "Sunny" ? Icons.cloud: Icons.sunny,size: 96,color: const Color.fromARGB(232, 119, 164, 199),),
+                 Image.asset(
+              getWeatherImage(currentSky),
+              width: 86,
+              height: 86,
+            ),
+                        // Icon(currentSky == "Clouds" || currentSky == "Sunny" ? Icons.cloud: Icons.sunny,size: 96,color: const Color.fromARGB(232, 119, 164, 199),),
                         const SizedBox(height: 16,),
                    
                         ],
@@ -148,9 +166,9 @@ body: FutureBuilder(
             itemBuilder: (context,index){
               final hourlyForecast=data["list"][index+1];
               final time =DateTime.parse(hourlyForecast['dt_txt']);
-              final hoursky =hourlyForecast["weather"][0]["main"].toString();
+              // final hoursky =hourlyForecast["weather"][0]["main"].toString();
               final hourtemp =kelvinToCelsius( hourlyForecast["main"]["temp"]).toString();
-              return HourlyForecast(time:DateFormat.j().format(time), forecasticon: hoursky == "Clouds" || hoursky =="sunny"? Icons.cloud: Icons.sunny,tempreture: hourtemp); },),
+              return HourlyForecast(time:DateFormat.j().format(time), forecastImage:getWeatherImage(currentSky),tempreture: hourtemp); },),
          ),
          // weather forecast items
        const Text('Additional Information',
@@ -158,9 +176,12 @@ body: FutureBuilder(
             ), const  SizedBox(height: 8,),
        Row(mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
+          
            AdditionalInfoItem(icon: Icons.water_drop,label: "Humidity",value: "$currentHumidity%" ,),
            AdditionalInfoItem(icon: Icons.air,label: "Wind Speed",value: "$windSpeed km/h" ,),
-           AdditionalInfoItem(icon: Icons.beach_access,label: "Pressure",value: "$currentPressure mb" ,),],
+           AdditionalInfoItem(icon: Icons.beach_access,label: "Pressure",value: "$currentPressure mb" ,),
+         
+         ],
          ),Image(image: AssetImage("assets/clear.png"))]
         ,),
     ),
