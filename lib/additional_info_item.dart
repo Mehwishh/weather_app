@@ -15,8 +15,8 @@ class AdditionalInfoItem extends StatelessWidget {
    
            Image.asset(
               icony,
-              width: 36,
-              height: 36,
+              width: 56,
+              height: 56,
             ), 
     const SizedBox(height: 13,),    Text(label,
              style: const TextStyle(fontSize: 16,

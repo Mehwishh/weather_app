@@ -3,10 +3,13 @@ class HourlyForecast extends StatelessWidget {
    final String tempreture;
    final String forecastImage;
    final String time;
+   final String sky;
   const HourlyForecast({super.key,
        required  this.time,required  
-       this.forecastImage ,required  
-       this.tempreture ,});
+       this.forecastImage ,
+       required  
+       this.tempreture ,   required  
+       this.sky,});
   @override
   Widget build(BuildContext context) {
 
@@ -23,13 +26,16 @@ class HourlyForecast extends StatelessWidget {
           overflow  :TextOverflow.fade,
               time,
               style:const TextStyle(fontSize: 17,fontWeight: FontWeight.bold,),
-            ),
+            ),const SizedBox(height: 10,),
              Image.asset(
               forecastImage,
               width: 36,
               height: 36,
             ),      
-                    Text(tempreture,style:const TextStyle(fontSize: 17,)
+                    Text("$sky",style:const TextStyle(fontSize: 14,)
+                    ,
+                    ),const SizedBox(height: 10,),
+                     Text("$tempreture\u00B0C",style:const TextStyle(fontSize: 17,)
                     ,
                     ),const SizedBox(height: 16,),
                     ],
