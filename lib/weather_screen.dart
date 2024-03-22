@@ -28,7 +28,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   return (temperatureKelvin - 273).toInt();
 }
    Future <Map<String ,dynamic>>getWeatherData()async{ 
-    var cityName ="Tokyo"; 
+    var cityName ="karachi"; 
     try {
       final result =await http.get(
       Uri.parse("https://api.openweathermap.org/data/2.5/forecast?q=$cityName&APPID=f93b554e4624c86b04fcfb2e2dbcdc09"),);
@@ -47,8 +47,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
   @override
   Widget build(BuildContext context) {
     
-    return Container(decoration: BoxDecoration(color: Colors.amber),
-      child: Scaffold(   
+    return Scaffold(   
           appBar: AppBar(title:const Text('weather App',
           style: TextStyle(fontWeight: FontWeight.bold,),
           ),
@@ -66,7 +65,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
           // allow to handle states of te app if its is loading or lost connection
           builder:(context,snapshot){
         if (snapshot.connectionState ==ConnectionState.waiting){
-          return const CircularProgressIndicator.adaptive(); }
+          return const Center(child: CircularProgressIndicator.adaptive()); }
         if (snapshot.hasError){
           return Center(child: (Text(snapshot.error.toString())));
         }
@@ -175,7 +174,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
                ),  
            // weather forecast items
             const  SizedBox(height: 16,),
-           const Text('weather Forecast',
+           const Text('Hourly Forecast',
                 style: TextStyle(fontWeight: FontWeight.bold,fontSize: 23),
                 ), const  SizedBox(height: 10,),
         //    SingleChildScrollView(
@@ -214,7 +213,5 @@ class _WeatherScreenState extends State<WeatherScreen> {
             ,),
         ),
         ); } ,
-        )
-        ),
-    ); }
+        )); }
  }
